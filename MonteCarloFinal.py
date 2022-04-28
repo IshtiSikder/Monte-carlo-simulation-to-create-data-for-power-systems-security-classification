@@ -101,91 +101,10 @@ def mcarlo(a,b):
         print(solved)
 
 
-# # Line flow 
-# 
-# => Col 5 gives line flow cap
-# 
-# => Col 13 gives line flow values
-# 
-# => sep g for each line
 
-# # Issues
-# 
-# 1. Does lowering row indexes by 1 for bus data (column 0) and branch data (columns 0 and 1) affect other values (columns) within bus and branch data ? If so, what are they and how should they be adjusted?
-# 
-# Everything being considered for case9(). Following info MAY vary for other cases.
-# 
-# => For ppc['bus'] lower indexes by 1 for first column that records bus numbers
-# 
-# => For ppc['branch'] lower indexes by 1 for first two columns that record branch numbers
-# 
-# => For ppc['gen'] lower index by 1 for first column that records genarator numbers
-# 
-# 
-# 2. Renewable generation fluctuation (part of the generators considered as wind generators) has been addressed as multiplying P column with -1. Is this correct ? As described in the paper, the wind speed forecast error is assumed to follow a normal distribution with zero mean and a standard deviation of 0.05.
-# 
-# Everything being considered for case9(). Following info MAY vary for other cases.
-# 
-# => consider column 8 of ppc['gen'] that records max capacity for each generators
-# 
-# => Randomly pick one generator. Figure out which bus is said generator connected to. [Look into column names/definitions for standard IEEE test cases from either MATPOWER or PYPOWER]
-# 
-# => Assume a forecast that 10% from said genarator's max capacity is attributed to wind power. Calculate this wind power.
-# 
-# => Adjust said wind power value for forecast error by randomly picking error value from distribution mentioned in the paper (mean=0,sdv=0.05) and adding it to the said wind power value. 
-# 
-# => Subtract this value now from the P column (column 2 in ppc['bus']) row corresponding to the bus connected to generator
-# 
-# => Now multiply P and Q columns with the factors mentioned in the paper. Randomly drop row from branch data to maintain N-1 contingency
-# 
-# => Solve ACPF model.
-# 
-# 
-# 3. Do the ACPF calculation results make sense? Are there any outragous values ?
-# 
-# => They don't make sense. Q values are outragous after solving ACPF model.
-# 
-# 4. Do results look okay after improving on first 3 concerns?
-# 
-# => flip wind and load fluctuation
-# 
-# 5. How to set wind gen forecast for cases other than case 9 (10%)?
-# 
-# => Okay (you can actually choose anything between 10 to 30%). value chosen from a normal dist with mean = 25 , sdv = 5 can also work
-# 
-# 6. From the result bus data, does column 7 (Vm) gives ith bus voltage?
-# 
-# => yes
-# 
-# 7. Do the limits (alarm/security) and desired voltage make sense? (especially alarm and sec up)
-# 
-# => yes
-# 
-# 8. Do the formulae for g_up and g_low make sense?
-# 
-# => They do
-# 
-# 9. Do the formula for d_up and d_low make sense?
-# 
-# => NO. 
-# 
-# => Get rid of the if else statements and the 0 limits in the code. Stick to the logic presented in the paper
-# 
-# => Consider column 7 (Vm) for a random simulation that has been solved (ACPF). By hand, calculate SI for said Vm as per the SI formula , ignore d(p,l) and g(p,l). Should give you an idea of how the SI value shapes up (less, equal or greater than 0 or 1) in general
-# 
-# => Show this calculation to Dr. Bai to get his thoughts, as well as the one done by Abhijith which he shared with you on teams. 
-# 
-# => Check the paper that has been referenced for the SI formula to understand the formula better.
-# 
-# 
-# 10. How to calculate d(p,l) and g(p,l)?
-# 
-# => not necessary
 
 # In[283]:
 
-
-#N/A
 
 
 import multiprocessing
